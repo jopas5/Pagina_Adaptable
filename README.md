@@ -1,2 +1,2 @@
 # Pagina_Adaptable
- Pagina Web adaptable usando BootStrap
+Formulario web adaptable usando BootStrap
