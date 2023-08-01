@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Web Responsiva - Bootstrap</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <!-- Aquí se muestra el formulario para poder ingresar los datos -->
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-md-12 ">
+                <div class="card w-100">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="mb-0">Formulario</h2>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="nombre">Nombre:</label>
+                                <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre">
+                            </div>
+                            <div class="form-group">
+                                <label for="apellido">Apellido:</label>
+                                <input type="text" class="form-control" id="apellido" placeholder="Ingresa tu apellido">
+                            </div>
+                            <div class="form-group">
+                                <label for="carrera">Carrera:</label>
+                                <input type="text" class="form-control" id="carrera" placeholder="Ingresa tu carrera">
+                            </div>
+                            <div class="form-group">
+                                <label for="nivel">Nivel:</label>
+                                <input type="text" class="form-control" id="nivel" placeholder="Ingresa tu nivel">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico">
+                            </div>
+                            <br>
+                            <button type="button" class="btn btn-primary btn-block" onclick="guardarDatos()">Enviar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Aquí se mostrará la tabla con los datos -->
+        <div class="table-responsive mt-5 mb-5">
+            <h2 class="text-center mb-3">Datos ingresados</h2>
+            <table class="table table-bordered table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Carrera</th>
+                        <th>Nivel</th>
+                        <th>Email</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-datos-body"></tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+    <footer class="bg-dark text-white text-center py-3 position-fixed bottom-0 w-100">
+        <p>&copy; 2023 Sánchez Loor Joan Patricio & Briones Ríos Shariff Stephen - Todos los derechos reservados</p>
+    </footer>
+
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script>
+        // Variable para almacenar los datos enviados desde el formulario
+        var datos = [];
+
+        function guardarDatos() {
+            var nombre = document.getElementById('nombre').value;
+            var apellido = document.getElementById('apellido').value;
+            var carrera = document.getElementById('carrera').value;
+            var nivel = document.getElementById('nivel').value;
+            var email = document.getElementById('email').value;
+
+            // Agregar los datos a la variable "datos"
+            datos.push({ nombre, apellido, carrera, nivel, email });
+
+            // Limpiar los campos del formulario
+            document.getElementById('nombre').value = '';
+            document.getElementById('apellido').value = '';
+            document.getElementById('carrera').value = '';
+            document.getElementById('nivel').value = '';
+            document.getElementById('email').value = '';
+
+            // Mostrar la tabla actualizada con los datos
+            mostrarTabla();
+        }
+
+         function mostrarTabla() {
+                var tablaHTML = '';
+
+                for (var i = 0; i < datos.length; i++) {
+                    tablaHTML += '<tr><td>' + datos[i].nombre + '</td><td>' + datos[i].apellido + '</td><td>' + datos[i].carrera + '</td><td>' + datos[i].nivel + '</td><td>' + datos[i].email + '</td><td><button class="btn btn-sm btn-primary" onclick="editarRegistro(' + i + ')">Editar</button> <button class="btn btn-sm btn-danger" onclick="eliminarRegistro(' + i + ')">Eliminar</button></td></tr>';
+                }
+
+                // Mostrar la tabla en el contenedor
+                document.getElementById('tabla-datos-body').innerHTML = tablaHTML;
+        }
+
+        function editarRegistro(index) {
+                // Obtener los datos del registro a editar
+                var registro = datos[index];
+
+                // Rellenar el formulario con los datos del registro
+                document.getElementById('nombre').value = registro.nombre;
+                document.getElementById('apellido').value = registro.apellido;
+                document.getElementById('carrera').value = registro.carrera;
+                document.getElementById('nivel').value = registro.nivel;
+                document.getElementById('email').value = registro.email;
+        }
+        function eliminarRegistro(index) {
+
+            // Eliminar el registro del array "datos"
+            datos.splice(index, 1);
+            
+            // Actualizar la tabla
+            mostrarTabla();
+        }
+    </script>
+</body>
+
+</html>
